@@ -211,30 +211,6 @@
                 }
             },
             "condition": "[or(parameters('enableFusionAlert'))]"
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "name": "enableScheduledAlerts",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments/', 'enableAlerts')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('LinkedTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "dataConnectorsList": {
-                        "value": "[replace(replace(string(parameters('enableDataConnectorsKind')),'\"',''),'[','')]"
-                    }
-                }
-            },
-            "condition": "[parameters('enableScheduledAlerts')]"
         }
     ],
     "outputs": {
