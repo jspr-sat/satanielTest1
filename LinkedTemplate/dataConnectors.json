@@ -63,7 +63,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('o365Name'))]",
+            "name": "Office365",
             "kind": "Office365",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -85,7 +85,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mdatpName'))]",
+            "name": "MicrosoftDefenderAdvancedThreatProtection",
             "kind": "MicrosoftDefenderAdvancedThreatProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -101,7 +101,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mcasName'))]",
+            "name": "MicrosoftCloudAppSecurity",
             "kind": "MicrosoftCloudAppSecurity",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -120,7 +120,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('ascName'))]",
+            "name": "AzureSecurityCenter",
             "kind": "AzureSecurityCenter",
             "properties": {
                 "subscriptionId": "[parameters('subscriptionId')]",
@@ -136,7 +136,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aatpName'))]",
+            "name": "AzureAdvancedThreatProtection",
             "kind": "AzureAdvancedThreatProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -152,7 +152,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aadipName'))]",
+            "name": "AzureActiveDirectoryIP",
             "kind": "AzureActiveDirectory",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -168,7 +168,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('m365dName'))]",
+            "name": "Microsoft365Defender",
             "kind": "MicrosoftThreatProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -184,7 +184,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mpipName'))]",
+            "name": "MicrosoftPurviewInformationProtection",
             "kind": "MicrosoftPurviewInformationProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -268,7 +268,7 @@
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('tiName'))]",
+            "name": "ThreatIntelligence",
             "kind": "ThreatIntelligence",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
