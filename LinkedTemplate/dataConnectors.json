@@ -223,7 +223,7 @@
             "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
             }
         },
-		{
+	{
             "condition": "[contains(parameters('dataConnectorsKind'), 'Microsoft365Defender')]",
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
@@ -239,7 +239,7 @@
                 }
             }
         },
-		{
+	{
             "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftPurviewInformationProtection')]",
             "type": "Microsoft.SecurityInsights/dataConnectors",
             "apiVersion": "2023-02-01-preview",
