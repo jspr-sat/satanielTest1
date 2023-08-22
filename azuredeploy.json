@@ -181,36 +181,6 @@
                 }
             },
             "condition": "[not(empty(parameters('enableDataConnectorsKind')))]"
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-05-01",
-            "name": "enableAlerts",
-            "dependsOn": [
-                "default"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('LinkedTemplates/alertRules.json', parameters('_artifactsLocationSasToken')))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "dataConnectorsKind": {
-                        "value": "[parameters('enableDataConnectorsKind')]"
-                    },
-                    "workspaceName": {
-                        "value": "[parameters('workspaceName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "enableFusionAlert": {
-                        "value": "[parameters('enableFusionAlert')]"
-                    }
-                }
-            },
-            "condition": "[or(parameters('enableFusionAlert'))]"
         }
     ],
     "outputs": {
