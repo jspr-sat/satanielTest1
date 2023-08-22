@@ -210,7 +210,7 @@
                     }
                 }
             },
-            "condition": "[or(parameters('enableFusionAlert'),parameters('enableMicrosoftAlerts'),parameters('enableMLAlerts'))]"
+            "condition": "[or(parameters('enableFusionAlert'))]"
         },
         {
             "type": "Microsoft.Resources/deployments",
