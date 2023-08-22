@@ -72,6 +72,27 @@
                 "description": "Enable Fusion analytics rules"
             }
         },
+        "enableMicrosoftAlerts": {
+            "defaultValue": false,
+            "type": "Bool",
+            "metadata": {
+                "description": "Enable Microsoft analytics rules"
+            }
+        },
+        "enableMLAlerts": {
+            "defaultValue": false,
+            "type": "Bool",
+            "metadata": {
+                "description": "Enable ML Behavior Analytics rules"
+            }
+        },
+        "enableScheduledAlerts": {
+            "defaultValue": false,
+            "type": "Bool",
+            "metadata": {
+                "description": "Enable Scheduled analytics rules"
+            }
+        },
         "mcasDiscoveryLogs": {
             "defaultValue": false,
             "type": "Bool",
@@ -80,7 +101,7 @@
             }
         },
         "_artifactsLocation": {
-            "defaultValue": "https://raw.githubusercontent.com/jspr-sat/satanielTest1/main/",
+            "defaultValue": "https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Tools/Sentinel-All-In-One/v1/",
             "type": "String",
             "metadata": {
                 "description": "The location of resources"
@@ -143,15 +164,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('LinkedTemplates/dataConnectors.json', parameters('_artifactsLocationSasToken')))]",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/dataConnectors.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "dataConnectorsKind": {
                         "value": "[parameters('enableDataConnectorsKind')]"
-                    },
-					"aadStreams": {
-                        "value": "[parameters('aadStreams')]"
                     },
                     "workspaceName": {
                         "value": "[parameters('workspaceName')]"
@@ -185,7 +203,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('LinkedTemplates/alertRules.json', parameters('_artifactsLocationSasToken')))]",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/alertRules.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -200,6 +218,12 @@
                     },
                     "enableFusionAlert": {
                         "value": "[parameters('enableFusionAlert')]"
+                    },
+                    "enableMicrosoftAlerts": {
+                        "value": "[parameters('enableMicrosoftAlerts')]"
+                    },
+                    "enableMLAlerts": {
+                        "value": "[parameters('enableMLAlerts')]"
                     }
                 }
             },
@@ -215,7 +239,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[uri(parameters('_artifactsLocation'), concat('LinkedTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
+                    "uri": "[uri(parameters('_artifactsLocation'), concat('ARMTemplates/LinkedTemplates/scheduledAlerts.json', parameters('_artifactsLocationSasToken')))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
