@@ -92,36 +92,24 @@
                                     "value": "Office365"
                                 },
                                 {
-                                    "label": "Microsoft Defender for Identity",
-                                    "value": "AzureAdvancedThreatProtection"
-                                },
-								{
-                                    "label": "Azure AD",
-                                    "value": "AzureActiveDirectory"
+                                    "label": "Microsoft Defender for Identity (formerly Azure Advanced Threat Protection)",
+                                    "value": "MicrosoftDefenderforIdentity"
                                 },
                                 {
                                     "label": "Azure AD Identity Protection",
-                                    "value": "AzureActiveDirectoryIP"
+                                    "value": "AzureActiveDirectory"
                                 },
                                 {
-                                    "label": "Microsoft Defender for Endpoint",
-                                    "value": "MicrosoftDefenderAdvancedThreatProtection"
+                                    "label": "Microsoft Defender for Endpoint (formerly Microsoft Defender Advanced Threat Protection)",
+                                    "value": "MicrosoftDefenderforEndpoint"
                                 },
                                 {
-                                    "label": "Microsoft Defender for Cloud",
-                                    "value": "AzureSecurityCenter"
+                                    "label": "Microsoft Defender for Cloud (formerly Azure Security Center and Azure Defender)",
+                                    "value": "MicrosoftDefenderforCloud"
                                 },
                                 {
-                                    "label": "Microsoft Defender for Cloud Apps",
-                                    "value": "MicrosoftCloudAppSecurity"
-                                },
-								{
-                                    "label": "Microsoft Defender 365",
-                                    "value": "Microsoft365Defender"
-                                },
-								{
-                                    "label": "Microsoft Purview Information Protection",
-                                    "value": "MicrosoftPurviewInformationProtection"
+                                    "label": "Microsoft Defender for Cloud Apps (formerly Microsoft Cloud App Security) ",
+                                    "value": "MicrosoftDefenderforCloudApps"
                                 },
                                 {
                                     "label": "Azure Activity",
@@ -138,10 +126,6 @@
                                 {
                                     "label": "DNS Analytics",
                                     "value": "DNS"
-                                },
-								{
-                                    "label": "Threat Intelligence",
-                                    "value": "ThreatIntelligence"
                                 },
                                 {
                                     "label": "Linux Syslog",
@@ -161,7 +145,7 @@
                             "required": false,
                             "validationMessage": "Please select"
                         },
-                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity'), true, false)]"
+                        "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftDefenderforCloudApps'), true, false)]"
                     },
                     {
                         "name": "securityCollectionTier",
@@ -189,7 +173,44 @@
                         "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents'), true, false)]"
                     }
                 ]
-            }
+            },
+            {
+                "name": "analyticsRules",
+                "label": "Analytics Rules",
+                "elements": [
+                    {
+                        "name": "enableMicrosoftAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable Microsoft alert rules for selected connectors?",
+                        "toolTip": "Select to enable Microsoft rules for the connectors you selected in the previous step.",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Enables rules coming from selected Microsoft security products"
+                        },
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftDefenderforIdentity'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureActiveDirectoryIdentityProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftDefenderAdvancedThreatProtection'),contains(steps('dataConnectors').enableDataConnectorsKind,'AzureSecurityCenter'),contains(steps('dataConnectors').enableDataConnectorsKind,'MicrosoftCloudAppSecurity')), true, false)]"
+                    },
+                    {
+                        "name": "enableMLAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable ML Behavior Analytics alert rules?",
+                        "toolTip": "Select to enable ML Behavior Analytics rules for selected connectors (SecurityEvents and/or Syslog)",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Enables SSH and/or RDP anomalous login alerts"
+                        },
+                        "visible": "[if(or(contains(steps('dataConnectors').enableDataConnectorsKind,'Syslog'),contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents')), true, false)]"
+                    },
+                    {
+                        "name": "enableScheduledAlerts",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "Enable Scheduled alert rules for selected connectors?",
+                        "toolTip": "Select to enable scheduled analytics rules for selected connectors",
+                        "constraints": {
+                            "required": false,
+                            "validationMessage": "Enables Scheduled rules matching any of the selected connectors"
+                        },
+                        "visible": true
+                    }
                 ]
             }
         ],
@@ -199,9 +220,11 @@
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
-			"aadStreams": "[steps('dataConnectors').aadStreams]",
             "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
-            "location": "[location()]"
+            "location": "[location()]",
+            "enableMicrosoftAlerts": "[steps('analyticsRules').enableMicrosoftAlerts]",
+            "enableMLAlerts": "[steps('analyticsRules').enableMLAlerts]",
+            "enableScheduledAlerts": "[steps('analyticsRules').enableScheduledAlerts]"
         }
     }
 }
