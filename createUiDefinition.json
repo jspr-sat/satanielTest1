@@ -64,7 +64,8 @@
             {
                 "name": "dataConnectors",
                 "label": "Data connectors",
-                "elements": [
+                "elements": 
+				[
                     {
                         "name": "textBlock1",
                         "type": "Microsoft.Common.TextBlock",
@@ -251,8 +252,6 @@
                         },
                         "visible": "[if(contains(steps('dataConnectors').enableDataConnectorsKind,'SecurityEvents'), true, false)]"
                     }
-                ]
-            }
                 ]
             }
         ],
