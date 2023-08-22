@@ -96,7 +96,7 @@
                                     "label": "Microsoft Defender for Identity",
                                     "value": "AzureAdvancedThreatProtection"
                                 },
-								{
+				{
                                     "label": "Azure AD",
                                     "value": "AzureActiveDirectory"
                                 },
@@ -116,11 +116,11 @@
                                     "label": "Microsoft Defender for Cloud Apps",
                                     "value": "MicrosoftCloudAppSecurity"
                                 },
-								{
+				{
                                     "label": "Microsoft Defender 365",
                                     "value": "Microsoft365Defender"
                                 },
-								{
+				{
                                     "label": "Microsoft Purview Information Protection",
                                     "value": "MicrosoftPurviewInformationProtection"
                                 },
@@ -140,7 +140,7 @@
                                     "label": "DNS Analytics",
                                     "value": "DNS"
                                 },
-								{
+				{
                                     "label": "Threat Intelligence",
                                     "value": "ThreatIntelligence"
                                 },
@@ -153,7 +153,7 @@
                         },
                         "visible": true
                     },
-					{
+		    {
                         "name": "aadStreams",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Select Azure Active Directory log types to enable",
@@ -261,7 +261,7 @@
             "dataRetention": "[basics('dataRetention')]",
             "enableDataConnectorsKind": "[steps('dataConnectors').enableDataConnectorsKind]",
             "securityCollectionTier": "[steps('dataConnectors').securityCollectionTier]",
-			"aadStreams": "[steps('dataConnectors').aadStreams]",
+	    "aadStreams": "[steps('dataConnectors').aadStreams]",
             "mcasDiscoveryLogs": "[steps('dataConnectors').mcasDiscoveryLogs]",
             "location": "[location()]"
         }
