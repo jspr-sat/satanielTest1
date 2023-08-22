@@ -157,7 +157,7 @@
                     "dataConnectorsKind": {
                         "value": "[parameters('enableDataConnectorsKind')]"
                     },
-					"aadStreams": {
+		    "aadStreams": {
                         "value": "[parameters('aadStreams')]"
                     },
                     "workspaceName": {
