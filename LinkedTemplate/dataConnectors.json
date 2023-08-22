@@ -47,23 +47,23 @@
         }
     },
     "variables": {
-        "o365Name": "Office365",
+        "o365Name": "[concat('o365', uniqueString(resourceGroup().id))]",
         "mdatpName": "[concat('mdatp', uniqueString(resourceGroup().id))]",
         "aatpName": "[concat('aatp', uniqueString(resourceGroup().id))]",
         "ascName": "[concat('asc', uniqueString(resourceGroup().id))]",
         "mcasName": "[concat('mcas', uniqueString(resourceGroup().id))]",
         "aadipName": "[concat('aadip', uniqueString(resourceGroup().id))]",
-		"m365dName": "[concat('m365d', uniqueString(resourceGroup().id))]",
-		"mpipName": "[concat('mpip', uniqueString(resourceGroup().id))]",
+	"m365dName": "[concat('m365d', uniqueString(resourceGroup().id))]",
+	"mpipName": "[concat('mpip', uniqueString(resourceGroup().id))]",
         "tiName": "[concat('ti', uniqueString(resourceGroup().id))]"
     },
     "resources": [
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'Office365')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "Office365",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('o365Name'))]",
             "kind": "Office365",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -82,10 +82,10 @@
         },
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftDefenderAdvancedThreatProtection')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "MicrosoftDefenderAdvancedThreatProtection",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mdatpName'))]",
             "kind": "MicrosoftDefenderAdvancedThreatProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -98,10 +98,10 @@
         },
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftCloudAppSecurity')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "MicrosoftCloudAppSecurity",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mcasName'))]",
             "kind": "MicrosoftCloudAppSecurity",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -117,10 +117,10 @@
         },
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'AzureSecurityCenter')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "AzureSecurityCenter",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('ascName'))]",
             "kind": "AzureSecurityCenter",
             "properties": {
                 "subscriptionId": "[parameters('subscriptionId')]",
@@ -133,10 +133,10 @@
         },
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'AzureAdvancedThreatProtection')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "AzureAdvancedThreatProtection",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aatpName'))]",
             "kind": "AzureAdvancedThreatProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -149,10 +149,10 @@
         },
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectoryIP')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "AzureActiveDirectoryIP",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('aadipName'))]",
             "kind": "AzureActiveDirectory",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -163,12 +163,72 @@
                 }
             }
         },
-	{
+        {
+            "condition": "[contains(parameters('dataConnectorsKind'), 'AzureActiveDirectory')]",
+            "type": "microsoft.aadiam/diagnosticSettings",
+            "apiVersion": "2017-04-01",
+            "scope": "/",
+            "name": "[format('{0}-aadDiagnosticSetttings', parameters('workspaceName'))]",
+            "properties": {
+            "logs": [
+                {
+                    "category": "SignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'SignInLogs')]"
+                },
+                {
+                    "category": "AuditLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'AuditLogs')]"
+                },
+                {
+                    "category": "NonInteractiveUserSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'NonInteractiveUserSignInLogs')]"
+                },
+                {
+                    "category": "ServicePrincipalSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ServicePrincipalSignInLogs')]"
+                },
+                {
+                    "category": "ManagedIdentitySignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ManagedIdentitySignInLogs')]"
+                },
+                {
+                    "category": "ProvisioningLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ProvisioningLogs')]"
+                },
+                {
+                    "category": "ADFSSignInLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'ADFSSignInLogs')]"
+                },
+                {
+                    "category": "UserRiskEvents",
+                    "enabled": "[contains(parameters('aadStreams'),'UserRiskEvents')]"
+                },
+                {
+                    "category": "RiskyUsers",
+                    "enabled": "[contains(parameters('aadStreams'),'RiskyUsers')]"
+                },
+                {
+                    "category": "NetworkAccessTrafficLogs",
+                    "enabled": "[contains(parameters('aadStreams'),'NetworkAccessTrafficLogs')]"
+                },
+                {
+                    "category": "RiskyServicePrincipals",
+                    "enabled": "[contains(parameters('aadStreams'),'RiskyServicePrincipals')]"
+                },
+                {
+                    "category": "ServicePrincipalRiskEvents",
+                    "enabled": "[contains(parameters('aadStreams'),'ServicePrincipalRiskEvents')]"
+                }
+            ],
+            "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+            }
+        },
+		{
             "condition": "[contains(parameters('dataConnectorsKind'), 'Microsoft365Defender')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "Microsoft365Defender",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('m365dName'))]",
             "kind": "MicrosoftThreatProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -179,12 +239,12 @@
                 }
             }
         },
-	{
+		{
             "condition": "[contains(parameters('dataConnectorsKind'), 'MicrosoftPurviewInformationProtection')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "MicrosoftPurviewInformationProtection",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('mpipName'))]",
             "kind": "MicrosoftPurviewInformationProtection",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
@@ -265,10 +325,10 @@
         },
         {
             "condition": "[contains(parameters('dataConnectorsKind'), 'ThreatIntelligence')]",
-            "type": "Microsoft.SecurityInsights/dataConnectors",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
             "apiVersion": "2023-02-01-preview",
             "location": "[parameters('location')]",
-            "name": "ThreatIntelligence",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',variables('tiName'))]",
             "kind": "ThreatIntelligence",
             "properties": {
                 "tenantId": "[parameters('tenantId')]",
