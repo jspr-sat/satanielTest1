@@ -47,7 +47,7 @@
         }
     },
     "variables": {
-        "o365Name": "[concat('o365', uniqueString(resourceGroup().id))]",
+        "o365Name": "Office365",
         "mdatpName": "[concat('mdatp', uniqueString(resourceGroup().id))]",
         "aatpName": "[concat('aatp', uniqueString(resourceGroup().id))]",
         "ascName": "[concat('asc', uniqueString(resourceGroup().id))]",
