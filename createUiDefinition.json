@@ -214,7 +214,7 @@
                           "required": false
                       },
                       "visible": "[if(contains(steps('dataConnectors').enableDataConnectors,'AzureActiveDirectory'),true,false)]"
-                  }
+                  },
                     {
                         "name": "mcasDiscoveryLogs",
                         "type": "Microsoft.Common.CheckBox",
